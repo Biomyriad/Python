@@ -1,8 +1,7 @@
+import random
 from . import card
 
 class Deck:
-
-
     def __init__( self ):
         suits = [ "spades" , "hearts" , "clubs" , "diamonds" ]
         self.cards = []
@@ -20,9 +19,18 @@ class Deck:
                     str_val = "King"
                 else:
                     str_val = str(i)
-                self.cards.append( card.Card( s , i , str_val ) )
+                self.cards.append( card.Card( s , i , str_val) )
+
+    def shuffle_cards(self):
+        for i in range(0,50):
+            random.shuffle(self.cards)
+
+    def draw_card(self, is_face_down=False):
+        card = self.cards.pop()
+        card.is_face_down = is_face_down
+        return card
 
     def show_cards(self):
         for card in self.cards:
-            card.card_info()
+            print(card.short_card_val())
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/resets.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/onload_css_values.js') }}"></script>
+    <script>window.onload = loadCssValues({{ css_vars|tojson }})</script>
+    <title>Playground</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 class="welcome-msg">*** Checkerboard ***</h1>
+
+        <div class="checkered-container">
+            <table>
+                
+                {% for y in range(0, y_tiles) %}
+                    <tr>
+                        {% for x in range(0, x_tiles) %}
+                            <td class="back-color-{{ ((x+(y % 2) + 1) % 2) + 1 }}"></td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>

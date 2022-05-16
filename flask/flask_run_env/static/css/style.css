@@ -1,0 +1,67 @@
+:root {
+    --color-1: red;
+    --color-2: black;
+}
+
+body {
+    background-color: #eeeeee;
+}
+
+.container {
+    width: 900px;
+    margin: 0px auto;
+}
+
+.welcome-msg {
+    color: var(--color-1);
+    background-color: var(--color-2);
+    border-radius: 10px;
+    box-shadow: 0px 10px 13px -7px #000000;
+    width: 380px;
+    margin: 20px auto;
+    font-size: 40px;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.checkered-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+table {
+    box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
+    border-collapse: collapse;
+    border-radius: 10px;
+}
+
+td {
+    width: 100px;
+    height: 100px;
+}
+
+tr:first-child td:first-child{
+    border-radius: 10px 0 0 0;
+}
+
+tr:first-child td:last-child{
+    border-radius: 0 10px 0 0;
+}
+
+tr:last-child td:first-child{
+    border-radius: 0 0 0 10px;
+}
+
+tr:last-child td:last-child{
+    border-radius: 0 0 10px 0;
+}
+
+.back-color-1 {
+    background-color: var(--color-1);
+}
+
+.back-color-2 {
+    background-color: var(--color-2);
+}
+

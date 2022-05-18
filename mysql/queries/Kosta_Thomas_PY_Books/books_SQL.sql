@@ -35,7 +35,13 @@ INSERT INTO favorites (author_id, book_id) VALUES(4, 1),(4, 2),(4, 3),(4, 4),(4,
 SELECT name FROM authors JOIN favorites ON authors.id = favorites.author_id WHERE favorites.book_id = 3;
 
 -- Remove the first author of the 3rd book's favorites
-DELETE FROM favorites WHERE favorites.author_id = (SELECT id FROM authors JOIN (SELECT * FROM favorites) favs ON authors.id = favs.author_id WHERE favs.book_id = 3 LIMIT 1);
+DELETE FROM favorites 
+WHERE favorites.author_id = 
+    (SELECT id FROM authors 
+     JOIN 
+        (SELECT * FROM favorites) 
+        favs ON authors.id = favs.author_id
+         WHERE favs.book_id = 3 LIMIT 1);
 
 -- Add the 5th author as an other who favorited the 2nd book
 INSERT INTO favorites (author_id, book_id) VALUES(5, 2);

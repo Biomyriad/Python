@@ -26,16 +26,35 @@ def route_users():
 
     users = User.get_all()
 
-    for row in users:
-        for key, value in vars(row).items():
-            print(f"{key} -> {value}")
-
     return render_template("index.html",users=users, css_vars=css_vars)  
 
 @app.route('/users/new')
 def route_new_user():
 
     return render_template("new_user_form.html", css_vars=css_vars)
+
+@app.route('/users/<int:user_id>')
+def route_user_info(user_id):
+
+    user = User.get_byid(user_id)
+
+    return render_template("user_details.html", user=user, css_vars=css_vars)
+
+@app.route('/users/<int:user_id>/edit')
+def route_user_edit(user_id):
+
+    user = User.get_byid(user_id)
+
+    return render_template("edit_user.html", user=user, css_vars=css_vars)
+
+# # # # # # # # # # #
+#   !! Test Routes !!
+# # # # # # # # # # #   
+
+@app.route('/test')
+def route_test():
+    
+    return render_template("user_details.html", css_vars=css_vars)     
 
 @app.route('/clear')
 def route_clear():
@@ -46,10 +65,8 @@ def route_clear():
 #   Posts
 # # # # # # # # # # #
 
-@app.route('/submit', methods=['POST'])
+@app.route('/newuser', methods=['POST'])
 def route_submit():
-
-    print(request.form)
 
     data = {
         'fname': request.form['fname'],
@@ -57,9 +74,29 @@ def route_submit():
         'email': request.form['email']
     }
 
-    User.save(data)
+    user_id = User.save(data)
 
-    return redirect("/users")
+    return redirect(f"/users/{user_id}")
+
+@app.route('/users/<int:user_id>/destroy', methods=['POST'])
+def route_delete(user_id):
+
+    user_id = User.delete_byid(user_id)
+
+    return redirect(f"/users")
+
+@app.route('/update', methods=['POST'])
+def route_update():
+
+    data = {
+        'fname': request.form['fname'],
+        'lname': request.form['lname'],
+        'email': request.form['email']
+    }
+    # UPDATE HERE AND MOD "updated_at" WITH NOW() IN SQL
+    user_id = User.save(data)
+
+    return redirect(f"/users/{user_id}")    
 
 # # # # # # # # # # #
 #   Error 

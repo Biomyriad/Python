@@ -24,21 +24,21 @@
                 <h3 class="welcome-msg text-center mt-2 mx-auto rounded">Users CRUD</h1>
                 <a href="/users" class="home-btn"><img src="{{ url_for('static', filename='images/home-icon.svg') }}" alt="home" style="height: 30px;"></a>
             </div>
-            <p class="text-center">Add new user</p>
+            <p class="text-center">Edit User</p>
 
             <hr class="">
 
-            <form action="/newuser" method="post">
+            <form action="/submit" method="post">
 
-                <input type="text" class="form-control mb-2" name="fname" placeholder="First Name" required>
-                <input type="text" class="form-control mb-2" name="lname" placeholder="Last Name" required>
-                <input type="email" class="form-control mb-2" name="email" placeholder="Email" required>
+                <input type="text" class="form-control mb-2" name="fname" placeholder="First Name" value="{{ user['first_name'] }}" required>
+                <input type="text" class="form-control mb-2" name="lname" placeholder="Last Name" value="{{ user['last_name'] }}" required>
+                <input type="email" class="form-control mb-2" name="email" placeholder="Email" value="{{ user['email'] }}" required>
 
                 <hr class="">
 
                 <div class="d-flex justify-content-end me-2">
-                    <button type="submit" class="btn-sm btn-primary me-2" name="action" value="submit">Register</button> 
-                    <a href="/users" class="btn-sm btn-primary text-decoration-none">Cancel</a>
+                    <button type="submit" class="btn-sm btn-primary me-2" name="action" value="submit">Update</button> 
+                    <a href="/users/{{ user['id'] }}" class="btn-sm btn-primary text-decoration-none">Show User</a>
                 </div>
             </form>
 

@@ -89,12 +89,13 @@ def route_delete(user_id):
 def route_update():
 
     data = {
+        'id': request.form['fname'],
         'fname': request.form['fname'],
         'lname': request.form['lname'],
         'email': request.form['email']
     }
     # UPDATE HERE AND MOD "updated_at" WITH NOW() IN SQL
-    user_id = User.save(data)
+    user_id = User.update(data)
 
     return redirect(f"/users/{user_id}")    
 

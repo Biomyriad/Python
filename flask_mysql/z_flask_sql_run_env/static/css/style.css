@@ -27,6 +27,7 @@ tr td:first-child {
     height: 35px;
     width: 35px;
     background-color: #f0f0f0;
+    /* background-color: #e5e5e5; */
     border-radius: 5px;
     text-decoration: none;
     text-align: center;

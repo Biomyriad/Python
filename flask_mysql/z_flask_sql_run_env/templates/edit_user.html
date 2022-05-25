@@ -28,11 +28,12 @@
 
             <hr class="">
 
-            <form action="/submit" method="post">
-
+            <form action="/update" method="post">
+                
                 <input type="text" class="form-control mb-2" name="fname" placeholder="First Name" value="{{ user['first_name'] }}" required>
                 <input type="text" class="form-control mb-2" name="lname" placeholder="Last Name" value="{{ user['last_name'] }}" required>
                 <input type="email" class="form-control mb-2" name="email" placeholder="Email" value="{{ user['email'] }}" required>
+                <input type="hidden" name="id" value="user['id']">
 
                 <hr class="">
 

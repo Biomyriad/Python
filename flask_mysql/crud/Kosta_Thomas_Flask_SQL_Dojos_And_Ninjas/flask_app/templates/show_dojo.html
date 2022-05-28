@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/resets.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/onload_css_values.js') }}"></script>
+    <script>window.onload = loadCssValues({{ css_vars|tojson }})</script>
+    <title>Dojos and Ninjas</title>
+</head>
+
+<body>
+
+    <div class="container-fluid page-container">
+
+        <div class="panel mx-auto rounded mt-5 p-3">
+
+            <div class="d-flex">
+                <div class="home-dummy-btn"></div>
+                <h3 class="welcome-msg text-center mt-2 mx-auto rounded">Dojos and Ninjas</h1>
+                <a href="/dojos" class="home-btn"><img src="{{ url_for('static', filename='images/home-icon.svg') }}" alt="home" style="height: 30px;"></a>
+            </div>
+            <p class="text-center">{{ dojo_name }} Ninjas</p>
+
+            <hr class="">
+
+            <!-- TABLE TABLE TABLE -->
+            <table class="table table-striped table-hover">
+                <thead class="fw-bold">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ninja in dojo_ninjas %}
+                        <tr>
+                            <td>{{ ninja.first_name }}</td>
+                            <td>{{ ninja.last_name }}</td>
+                            <td>{{ ninja.age }}</td>
+                        </tr>
+                    {% endfor %} 
+                </tbody>
+            </table>
+
+            <hr class="">
+
+        </div>
+
+    </div>
+
+</body>
+</html>

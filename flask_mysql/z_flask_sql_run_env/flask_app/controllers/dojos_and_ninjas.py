@@ -1,8 +1,8 @@
 from flask_app import app
 from flask import render_template, request, redirect, session
 
-from flask_app.models.ninja import Ninja
-from flask_app.models.dojo import Dojo
+from flask_app.models.author import Author
+from flask_app.models.book import Book
 
 css_vars = {
 }
@@ -14,29 +14,29 @@ css_vars = {
 @app.route('/')
 def route_landing():
 
-    return redirect("/dojos")
+    return redirect("/authors")
 
-@app.route('/dojos')
-def route_dojos():
+@app.route('/authors')
+def route_authors():
 
-    all_dojos = Dojo.get_all()
+    authors = Author.get_all()
 
-    return render_template("index.html", all_dojos=all_dojos, css_vars=css_vars)  
+    return render_template("index.html", authors=authors , css_vars=css_vars)  
 
-@app.route('/ninjas')
-def route_new_ninja():
+@app.route('/books')
+def route_books():
 
-    all_dojos = Dojo.get_all()
+    # all_dojos = Dojo.get_all()
 
-    return render_template("new_ninja.html", all_dojos=all_dojos, css_vars=css_vars)  
+    return render_template("new_book.html", css_vars=css_vars)  
 
-@app.route('/dojos/<int:dojo_id>')
-def route_dojo_ninjas(dojo_id):
+# @app.route('/dojos/<int:dojo_id>')
+# def route_dojo_ninjas(dojo_id):
 
-    dojo_name = Dojo.get_by_id(dojo_id).name
-    dojo_ninjas = Ninja.get_all_by_dojo_id(dojo_id)
+#     dojo_name = Dojo.get_by_id(dojo_id).name
+#     dojo_ninjas = Ninja.get_all_by_dojo_id(dojo_id)
 
-    return render_template("show_dojo.html", dojo_name=dojo_name, dojo_ninjas=dojo_ninjas, css_vars=css_vars)
+#     return render_template("show_dojo.html", dojo_name=dojo_name, dojo_ninjas=dojo_ninjas, css_vars=css_vars)
 
 # # # # # # # # # # #
 #   !! Test Routes !!
@@ -45,7 +45,7 @@ def route_dojo_ninjas(dojo_id):
 @app.route('/test')
 def route_test():
     
-    return render_template("user_details.html", css_vars=css_vars)     
+    return render_template("authors_favorites.html", css_vars=css_vars)     
 
 @app.route('/clear')
 def route_clear():
@@ -56,30 +56,30 @@ def route_clear():
 #   Posts
 # # # # # # # # # # #
 
-@app.route('/dojos/new_dojo', methods=['POST'])
-def route_new_dojo():
+# @app.route('/dojos/new_dojo', methods=['POST'])
+# def route_new_dojo():
 
-    data = {
-        'name': request.form['name']
-    }
+#     data = {
+#         'name': request.form['name']
+#     }
 
-    user_id = Dojo.save(data)
+#     user_id = Dojo.save(data)
 
-    return redirect(f"/dojos")
+#     return redirect(f"/dojos")
 
-@app.route('/ninjas/new_ninja', methods=['POST'])
-def route_update():
-    print(request.form)
-    data = {
-        'fname': request.form['fname'],
-        'lname': request.form['lname'],
-        'age': request.form['age'],
-        'dojo_id': request.form['dojo_id']
-    }
-    # UPDATE HERE AND MOD "updated_at" WITH NOW() IN SQL
-    ninja_id = Ninja.save(data)
+# @app.route('/ninjas/new_ninja', methods=['POST'])
+# def route_update():
+#     print(request.form)
+#     data = {
+#         'fname': request.form['fname'],
+#         'lname': request.form['lname'],
+#         'age': request.form['age'],
+#         'dojo_id': request.form['dojo_id']
+#     }
+#     # UPDATE HERE AND MOD "updated_at" WITH NOW() IN SQL
+#     ninja_id = Ninja.save(data)
 
-    return redirect(f"/dojos/{request.form['dojo_id']}")    
+#     return redirect(f"/dojos/{request.form['dojo_id']}")    
 
 # # # # # # # # # # #
 #   Error 

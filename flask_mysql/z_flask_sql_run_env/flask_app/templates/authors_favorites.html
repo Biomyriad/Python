@@ -31,7 +31,7 @@
         <div class="d-flex justify-content-center flex-wrap gap-sm-3 mt-3">
             <div class="panel rounded p-3 flex-grow-1" style="height: min-content;">
 
-                <h5 class="welcome-msg text-center mt-1 mx-auto rounded">New Book</h5>
+                <h5 class="welcome-msg text-center mt-1 mx-auto rounded">xxxx's Favorite</h5>
 
                 <hr class="">
 
@@ -43,10 +43,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for ninja in dojo_ninjas %}
+                        {% for book in author.favorite_books %}
                             <tr>
-                                <td>{{ ninja.first_name }}</td>
-                                <td>{{ ninja.last_name }}</td>
+                                <td>{{ book.title }}</td>
+                                <td>{{ book.num_of_pages }}</td>
                             </tr>
                         {% endfor %} 
                     </tbody>

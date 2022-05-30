@@ -1,4 +1,5 @@
 from flask_app.config.mysqlconnection import connectToMySQL
+from flask_app.models import book
 
 class Author:
     DB_AND_TABLE =('books', 'authors')
@@ -7,6 +8,7 @@ class Author:
         self.name = data['name']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+        self.favorite_books = []
 
     @classmethod
     def get_all(cls):
@@ -61,3 +63,31 @@ class Author:
     @classmethod
     def run_query(cls, query, data=None):
         return connectToMySQL(cls.DB_AND_TABLE[0]).query_db( query, data )
+
+    @classmethod
+    def test(cls, author_id):
+        query = f"""
+            SELECT * 
+            FROM {cls.DB_AND_TABLE[1]}
+            left join favorites on authors.id = favorites.author_id
+            left join books on favorites.book_id = books.id
+            where authors.id = %(id)s;
+        """
+        data = { "id": author_id }
+        results = cls.run_query(query, data)
+
+        author = cls(results[0])
+
+        for row in results:
+
+            book_data = {
+                'id': row['id'],
+                'title': row['title'],
+                'num_of_pages': row['num_of_pages'],
+                'created_at': row['created_at'],
+                'updated_at': row['updated_at']
+            }
+
+            author.favorite_books.append( book.Book(book_data) )
+
+        return author

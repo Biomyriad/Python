@@ -35,10 +35,10 @@
 
                 <hr class="">
 
-                <form action="/dojos/new_dojo" method="post">
+                <form action="/books/new_book" method="post">
                 
                     <input type="text" class="form-control mb-2" name="title" placeholder="Book Title" required>
-                    <input type="number" class="form-control mb-2" name="num_pages" placeholder="Number of Pages" required>
+                    <input type="number" class="form-control mb-2" name="num_of_pages" placeholder="Number of Pages" required>
     
                     <hr class="">
     
@@ -57,8 +57,8 @@
 
                     <div class="p-1 overflow-auto bg-white border border-dark" style="max-height: 200px;">
 
-                        {% for dojo in all_dojos %}
-                        <a href="/dojos/{{ dojo.id }}" class="d-block text-dark text-decoration-none">{{ dojo.name }}</a>
+                        {% for book in books %}
+                        <a href="/dojos/" class="d-block text-dark text-decoration-none">{{ book.title }}</a>
                         {% endfor %}
                     </div>
 

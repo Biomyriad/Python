@@ -1,5 +1,5 @@
-from ast import Not
 from flask_app.config.mysqlconnection import connectToMySQL
+from flask_app.models import author
 
 class Book:
     DB_AND_TABLE =('books', 'books')
@@ -59,6 +59,7 @@ class Book:
         """
         data = { "id": id }
         return cls.run_query(query, data)
+        
     @classmethod
     def run_query(cls, query, data=None):
         return connectToMySQL(cls.DB_AND_TABLE[0]).query_db( query, data )

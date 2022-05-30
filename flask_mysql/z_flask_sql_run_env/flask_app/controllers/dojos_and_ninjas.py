@@ -21,14 +21,21 @@ def route_authors():
 
     authors = Author.get_all()
 
-    return render_template("index.html", authors=authors , css_vars=css_vars)  
+    return render_template("index.html", authors=authors , css_vars=css_vars)
+
+@app.route('/authors/<int:author_id>')
+def route_authorsxxxxxxxxxxxxxxxxxxxxxxxxxx(author_id):
+
+    # authors = Author.()
+
+    return render_template("index.html", css_vars=css_vars)    
 
 @app.route('/books')
 def route_books():
 
-    # all_dojos = Dojo.get_all()
+    books = Book.get_all()
 
-    return render_template("new_book.html", css_vars=css_vars)  
+    return render_template("new_book.html", books=books, css_vars=css_vars)  
 
 # @app.route('/dojos/<int:dojo_id>')
 # def route_dojo_ninjas(dojo_id):
@@ -44,8 +51,10 @@ def route_books():
 
 @app.route('/test')
 def route_test():
+
+    author = Author.test(4)
     
-    return render_template("authors_favorites.html", css_vars=css_vars)     
+    return render_template("authors_favorites.html", author=author, css_vars=css_vars)     
 
 @app.route('/clear')
 def route_clear():
@@ -56,16 +65,28 @@ def route_clear():
 #   Posts
 # # # # # # # # # # #
 
-# @app.route('/dojos/new_dojo', methods=['POST'])
-# def route_new_dojo():
+@app.route('/authors/new_author', methods=['POST'])
+def route_new_author():
 
-#     data = {
-#         'name': request.form['name']
-#     }
+    data = {
+        'name': request.form['name']
+    }
 
-#     user_id = Dojo.save(data)
+    author_id = Author.save(data)
 
-#     return redirect(f"/dojos")
+    return redirect(f"/authors")
+
+@app.route('/books/new_book', methods=['POST'])
+def route_new_book():
+
+    data = {
+        'title': request.form['title'],
+        'num_of_pages': request.form['num_of_pages']
+    }
+
+    book_id = Book.save(data)
+
+    return redirect(f"/books")
 
 # @app.route('/ninjas/new_ninja', methods=['POST'])
 # def route_update():

@@ -54,7 +54,7 @@
                     <div class="p-1 overflow-auto bg-white border border-dark" style="max-height: 200px;">
 
                         {% for author in authors %}
-                        <a href="/dojos/" class="d-block text-dark text-decoration-none">{{ author.name }}</a>
+                        <a href="/authors/{{ author.id }}" class="d-block text-dark text-decoration-none">{{ author.name }}</a>
                         {% endfor %}
                     </div>
 

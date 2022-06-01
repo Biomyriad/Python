@@ -31,7 +31,7 @@
         <div class="d-flex justify-content-center flex-wrap gap-sm-3 mt-3">
             <div class="panel rounded p-3 flex-grow-1" style="height: min-content;">
 
-                <h5 class="welcome-msg text-center mt-1 mx-auto rounded">xxxx's Favorite</h5>
+                <h5 class="welcome-msg text-center mt-1 mx-auto rounded">{{ author.name }}'s Favorite</h5>
 
                 <hr class="">
 
@@ -66,8 +66,8 @@
                 
                     <select class="form-select mb-2" name="dojo_id" required>
                         <option value="" disabled selected>Book</option>
-                        {% for dojo in all_dojos %}
-                            <option value="{{ dojo.id }}">{{ dojo.name }}</option>
+                        {% for book in un_fav_books %}
+                            <option value="{{ book.id }}">{{ book.title }}</option>
                         {% endfor %}
                     </select>
     

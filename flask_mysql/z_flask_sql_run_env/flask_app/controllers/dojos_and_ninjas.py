@@ -1,3 +1,4 @@
+from unittest import result
 from flask_app import app
 from flask import render_template, request, redirect, session
 
@@ -24,11 +25,15 @@ def route_authors():
     return render_template("index.html", authors=authors , css_vars=css_vars)
 
 @app.route('/authors/<int:author_id>')
-def route_authorsxxxxxxxxxxxxxxxxxxxxxxxxxx(author_id):
+def route_authors_favorites(author_id):
 
-    # authors = Author.()
+    data = { "id": author_id }
+    result = Author.test(data)
 
-    return render_template("index.html", css_vars=css_vars)    
+    author = result[0]
+    un_fav_books = result[1]
+
+    return render_template("authors_favorites.html", author=author, un_fav_books=un_fav_books, css_vars=css_vars) 
 
 @app.route('/books')
 def route_books():
@@ -52,9 +57,13 @@ def route_books():
 @app.route('/test')
 def route_test():
 
-    author = Author.test(4)
+    result = Author.test(4)
+
+    author = result[0]
+    un_fav_books = result[1]
+    print(un_fav_books)
     
-    return render_template("authors_favorites.html", author=author, css_vars=css_vars)     
+    return render_template("authors_favorites.html", author=author, un_fav_books=un_fav_books, css_vars=css_vars)     
 
 @app.route('/clear')
 def route_clear():

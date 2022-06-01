@@ -65,19 +65,20 @@ class Author:
         return connectToMySQL(cls.DB_AND_TABLE[0]).query_db( query, data )
 
     @classmethod
-    def test(cls, author_id):
+    def test(cls, data):
         query = f"""
             SELECT * 
             FROM {cls.DB_AND_TABLE[1]}
             left join favorites on authors.id = favorites.author_id
-            left join books on favorites.book_id = books.id
-            where authors.id = %(id)s;
+            right join books on favorites.book_id = books.id
+            where author_id = %(id)s or author_id is null;
         """
-        data = { "id": author_id }
+        
         results = cls.run_query(query, data)
+        print(len(results))
 
         author = cls(results[0])
-        unfavorited_books = []
+        not_favorited_books = []
 
         for row in results:
             book_data = {
@@ -87,12 +88,12 @@ class Author:
                 'created_at': row['created_at'],
                 'updated_at': row['updated_at']
             }
-
-            if row['id'] == author_id:
+            print(book_data)
+            if row['id'] == data['id']:
                 author.favorite_books.append( book.Book(book_data) )
             else:
-                
+                not_favorited_books.append( book.Book(book_data) )
 
             
 
-        return author
+        return (author, not_favorited_books)

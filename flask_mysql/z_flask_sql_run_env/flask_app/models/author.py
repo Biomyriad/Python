@@ -77,17 +77,22 @@ class Author:
         results = cls.run_query(query, data)
 
         author = cls(results[0])
+        unfavorited_books = []
 
         for row in results:
-
             book_data = {
-                'id': row['id'],
+                'id': row['books.id'],
                 'title': row['title'],
                 'num_of_pages': row['num_of_pages'],
                 'created_at': row['created_at'],
                 'updated_at': row['updated_at']
             }
 
-            author.favorite_books.append( book.Book(book_data) )
+            if row['id'] == author_id:
+                author.favorite_books.append( book.Book(book_data) )
+            else:
+                
+
+            
 
         return author

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/resets.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/onload_css_values.js') }}"></script>
+    <script>window.onload = loadCssValues({{ css_vars|tojson }})</script>
+    <title>Show Books</title>
+</head>
+
+<body>
+
+    <div class="container-fluid page-container" style="max-width: 1000px;">
+
+        <div class="panel mx-auto rounded mt-3 p-1" style="max-width: none;">
+
+            <div class="d-flex align-items-center px-2">
+                <div class="home-dummy-btn"></div>
+                <h3 class="text-center mt-2 mx-auto rounded">Books</h1>
+                <a href="/authors" class="home-btn "><img src="{{ url_for('static', filename='images/home-icon.svg') }}" alt="home" style="height: 30px;"></a>
+            </div>
+
+        </div>
+
+        <div class="d-flex justify-content-center flex-wrap gap-sm-3 mt-3">
+            <div class="panel rounded p-3 flex-grow-1" style="height: min-content;">
+
+                <h5 class="text-center mt-1 mx-auto rounded">Title: {{ book.title }}</h5>
+
+                <hr class="">
+
+                <p>Favorited by:</p>
+                <ul class="list-unstyled">
+                    {% for author in book.fav_by_author %}
+                        <li class="ps-4">{{ author.name }}</li>
+                    {% endfor %}                     
+                </ul>
+
+                <hr class="">
+                
+            </div>
+
+            <div class="panel rounded p-3 flex-grow-1" style="height: min-content;">
+
+                <h5 class="text-center mt-1 mx-auto rounded">Add Book's Favorite</h5>
+
+                <hr class="">
+
+                <form action="/books/add_author_to_book" method="post">
+                
+                    <select class="form-select mb-2" name="author_id" required>
+                        <option value="" disabled selected>Author</option>
+                        {% for author in authors_not_fav_book %}
+                            <option value="{{ author.id }}">{{ author.name }}</option>
+                        {% endfor %}
+                    </select>
+    
+                    <input type="hidden" name="book_id" value="{{ book.id }}">
+
+                    <hr class="">
+    
+                    <div class="d-flex justify-content-end me-2">
+                        <button type="submit" class="btn-sm btn-primary" name="action" value="submit">Add</button> 
+                    </div>
+                </form>
+
+            </div>              
+        </div>
+
+    </div>
+
+</body>
+</html>

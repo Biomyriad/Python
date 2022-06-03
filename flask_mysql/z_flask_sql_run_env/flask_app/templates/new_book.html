@@ -21,17 +21,16 @@
 
             <div class="d-flex align-items-center px-2">
                 <div class="home-dummy-btn"></div>
-                <h3 class="welcome-msg text-center mt-2 mx-auto rounded">Books</h1>
+                <h3 class="text-center mt-2 mx-auto rounded">Books</h1>
                 <a href="/authors" class="home-btn "><img src="{{ url_for('static', filename='images/home-icon.svg') }}" alt="home" style="height: 30px;"></a>
             </div>
 
         </div>
 
-
         <div class="d-flex justify-content-center flex-wrap gap-sm-3 mt-3">
             <div class="panel rounded p-3 flex-grow-1" style="height: min-content;">
 
-                <h5 class="welcome-msg text-center mt-1 mx-auto rounded">New Book</h5>
+                <h5 class="text-center mt-1 mx-auto rounded">New Book</h5>
 
                 <hr class="">
 
@@ -51,22 +50,18 @@
 
             <div class="panel rounded p-3 flex-grow-1" style="height: min-content;">
 
-                <h5 class="welcome-msg text-center mt-1 mx-auto rounded">All Books</h5>
+                <h5 class="text-center mt-1 mx-auto rounded">All Books</h5>
 
                 <hr class="">
 
                     <div class="p-1 overflow-auto bg-white border border-dark" style="max-height: 200px;">
 
                         {% for book in books %}
-                        <a href="/dojos/" class="d-block text-dark text-decoration-none">{{ book.title }}</a>
+                        <a href="/books/{{ book.id }}" class="d-block text-dark text-decoration-none">{{ book.title }}</a>
                         {% endfor %}
                     </div>
 
                 <hr class="">
-
-                <div class="d-flex justify-content-end me-2">
-                        <a href="/ninjas" class="btn-sm btn-primary text-decoration-none">Add Ninja</a>
-                </div>
 
             </div>              
         </div>

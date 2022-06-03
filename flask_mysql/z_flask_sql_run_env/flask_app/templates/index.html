@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/onload_css_values.js') }}"></script>
     <script>window.onload = loadCssValues({{ css_vars|tojson }})</script>
-    <title>Books</title>
+    <title>Authors</title>
 </head>
 
 <body>
@@ -19,16 +19,15 @@
 
         <div class="panel mx-auto rounded mt-3 p-1" style="max-width: none;">
 
-            <h3 class="welcome-msg text-center mt-2 mx-auto rounded">Books</h3>
+            <h3 class="text-center mt-2 mx-auto rounded">Books</h3>
             <!-- <p class="text-center">---</p> -->
 
         </div>
 
-
         <div class="d-flex justify-content-center flex-wrap gap-sm-3 mt-3">
             <div class="panel rounded p-3 flex-grow-1" style="height: min-content;">
 
-                <h5 class="welcome-msg text-center mt-1 mx-auto rounded">New Author</h5>
+                <h5 class="text-center mt-1 mx-auto rounded">New Author</h5>
 
                 <hr class="">
 
@@ -47,7 +46,7 @@
 
             <div class="panel rounded p-3 flex-grow-1" style="height: min-content;">
 
-                <h5 class="welcome-msg text-center mt-1 mx-auto rounded">All Authors</h5>
+                <h5 class="text-center mt-1 mx-auto rounded">All Authors</h5>
 
                 <hr class="">
 

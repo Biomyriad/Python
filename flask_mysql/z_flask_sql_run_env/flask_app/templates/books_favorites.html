@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/onload_css_values.js') }}"></script>
     <script>window.onload = loadCssValues({{ css_vars|tojson }})</script>
-    <title>Books</title>
+    <title>Show Books</title>
 </head>
 
 <body>
@@ -21,21 +21,25 @@
 
             <div class="d-flex align-items-center px-2">
                 <div class="home-dummy-btn"></div>
-                <h3 class="welcome-msg text-center mt-2 mx-auto rounded">Books</h1>
+                <h3 class="text-center mt-2 mx-auto rounded">Books</h1>
                 <a href="/authors" class="home-btn "><img src="{{ url_for('static', filename='images/home-icon.svg') }}" alt="home" style="height: 30px;"></a>
             </div>
 
         </div>
 
-
         <div class="d-flex justify-content-center flex-wrap gap-sm-3 mt-3">
             <div class="panel rounded p-3 flex-grow-1" style="height: min-content;">
 
-                <h5 class="welcome-msg text-center mt-1 mx-auto rounded">New Book</h5>
+                <h5 class="text-center mt-1 mx-auto rounded">Title: {{ book.title }}</h5>
 
                 <hr class="">
 
-                Followed By: xxx
+                <p>Favorited by:</p>
+                <ul class="list-unstyled">
+                    {% for author in book.fav_by_author %}
+                        <li class="ps-4">{{ author.name }}</li>
+                    {% endfor %}                     
+                </ul>
 
                 <hr class="">
                 
@@ -43,19 +47,21 @@
 
             <div class="panel rounded p-3 flex-grow-1" style="height: min-content;">
 
-                <h5 class="welcome-msg text-center mt-1 mx-auto rounded">Add Book's Favorite</h5>
+                <h5 class="text-center mt-1 mx-auto rounded">Add Book's Favorite</h5>
 
                 <hr class="">
 
-                <form action="/ninjas/new_ninja" method="post">
+                <form action="/books/add_author_to_book" method="post">
                 
-                    <select class="form-select mb-2" name="dojo_id" required>
-                        <option value="" disabled selected>Book</option>
-                        {% for dojo in all_dojos %}
-                            <option value="{{ dojo.id }}">{{ dojo.name }}</option>
+                    <select class="form-select mb-2" name="author_id" required>
+                        <option value="" disabled selected>Author</option>
+                        {% for author in authors_not_fav_book %}
+                            <option value="{{ author.id }}">{{ author.name }}</option>
                         {% endfor %}
                     </select>
     
+                    <input type="hidden" name="book_id" value="{{ book.id }}">
+
                     <hr class="">
     
                     <div class="d-flex justify-content-end me-2">

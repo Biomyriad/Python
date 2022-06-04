@@ -29,18 +29,14 @@
                     <p class="mb-0">Name:</p>
                     <p class="mb-0">Dojo Location:</p>
                     <p class="mb-0">Favorite Language:</p>
-                    <p class="mb-0">Used at:</p>
-                    <p class="mb-0">Experience Level:</p>
                 </div>
                 <div class="col">
-                    <p class="mb-0">{{ session['name'] }}</p>
-                    <p class="mb-0">{{ session['dojo_location'] }}</p>
-                    <p class="mb-0">{{ session['fav_lang'] }}</p>
-                    <p class="mb-0">{{ session['usage'] }}</p>
-                    <p class="mb-0">{{ session['level_exp'] }}</p>
+                    <p class="mb-0">{{ survey.name }}</p>
+                    <p class="mb-0">{{ survey.location }}</p>
+                    <p class="mb-0">{{ survey.language }}</p>
                 </div>
                 <p class="mb-0 mt-3">Comments:</p>
-                <p class="mb-0">{{ session['comments'] }}</p>
+                <p class="mb-0">{{ survey.comment }}</p>
             </div>
 
             <hr class="mx-4">

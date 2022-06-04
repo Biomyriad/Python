@@ -1,10 +1,7 @@
 from flask_app import app
 from flask import render_template, request, redirect, session
 
-# imports here for testing...
-from flask_app.models.author import Author
-from flask_app.models.book import Book
-from flask_app.models.favorites import Favorites
+from flask_app.models.dojo import Dojo
 
 css_vars = {
 }
@@ -15,23 +12,31 @@ css_vars = {
 
 @app.route('/')
 def route_landing():
+    return render_template("index.html", css_vars=css_vars)
 
-    return redirect("/authors")
+@app.route('/result/<int:survey_id>')
+def route_results(survey_id):
+    survey = Dojo.get_by_id(survey_id)
+    return render_template("result.html", survey=survey, css_vars=css_vars)
+
+@app.route('/submit', methods=['POST'])
+def route_submit():
+
+    data = {}
+    print(request.form)
+    data['name'] = request.form['name']
+    data['location'] = request.form['dojo_location']
+    data['language'] = request.form['fav_lang']
+    data['comment'] = request.form['comment']
+
+    survey_id = Dojo.save(data)
+
+    # return redirect(f"/")    
+    return redirect(f"/result/{survey_id}")  
 
 # # # # # # # # # # #
 #   !! Test Routes !!
-# # # # # # # # # # #   
-
-@app.route('/test')
-def route_test():
-
-    result = Author.test(4)
-
-    author = result[0]
-    un_fav_books = result[1]
-    print(un_fav_books)
-    
-    return render_template("authors_favorites.html", author=author, un_fav_books=un_fav_books, css_vars=css_vars)     
+# # # # # # # # # # #      
 
 @app.route('/clear')
 def route_clear():

@@ -1,3 +1,4 @@
+from flask import flash
 from flask_app.config.mysqlconnection import connectToMySQL
 
 class Dojo:
@@ -34,3 +35,17 @@ class Dojo:
     @classmethod
     def run_query(cls, query, data=None):
         return connectToMySQL('dojo_survey').query_db( query, data )
+
+    @staticmethod
+    def validate(data):
+        is_valid = True # we assume this is true
+        if len(data['name']) < 3:
+            flash("Name must be at least 3 characters.")
+            is_valid = False
+        if 'location' not in data:
+            flash("Must pick a location.")
+            is_valid = False
+        if 'language' not in data:
+            flash("Must pick a language.")
+            is_valid = False
+        return is_valid

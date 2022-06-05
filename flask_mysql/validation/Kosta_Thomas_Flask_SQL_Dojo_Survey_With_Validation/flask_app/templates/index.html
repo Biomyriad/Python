@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/resets.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/onload_css_values.js') }}"></script>
+    <script>window.onload = loadCssValues({{ css_vars|tojson }})</script>
+    <title>Dojo Survey</title>
+</head>
+
+<body>
+
+    <div class="container-fluid page-container">
+
+        <div class="panel mx-auto rounded mt-5 p-3">
+
+            <h3 class="welcome-msg text-center mt-2 mx-auto rounded">Dojo Survey</h1>
+            <p class="text-center">Please take a moment to fill out our survey.</p>
+
+            <hr>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="/submit" method="post" class="mx-auto rounded">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" name="name" placeholder="Name" >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <select class="form-select" name="location" >
+                            <option value="" disabled selected>Select Dojo location</option>
+                            <option value="Seattle, Wa">Seattle, Wa</option>
+                            <option value="New York, Ny">New York, Ny</option>
+                            <option value="Austin, Tx">Austin, Tx</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <select class="form-select" name="language" >
+                            <option value="" disabled selected>Select favorite language</option>
+                            <option value="Python">Python</option>
+                            <option value="C#">C#</option>
+                            <option value="Java">Java</option>
+                        </select>
+                    </div>
+                </div>              
+                <div class="row mt-2">
+                    <div class="col">
+                        <label for="comment" class="form-label">Comments (optional)</label>
+                        <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col text-center">
+                        <button type="submit" class="btn btn-primary" name="action" value="submit">Submit</button> 
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

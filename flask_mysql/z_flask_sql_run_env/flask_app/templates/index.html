@@ -10,62 +10,60 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/onload_css_values.js') }}"></script>
     <script>window.onload = loadCssValues({{ css_vars|tojson }})</script>
-    <title>Dojo Survey</title>
+    <title>Authors</title>
 </head>
 
 <body>
 
-    <div class="container-fluid page-container">
+    <div class="container-fluid page-container" style="max-width: 1000px;">
 
-        <div class="panel mx-auto rounded mt-5 p-3">
+        <div class="panel mx-auto rounded mt-3 p-1" style="max-width: none;">
 
-            <h3 class="welcome-msg text-center mt-2 mx-auto rounded">Dojo Survey</h1>
-            <p class="text-center">Please take a moment to fill out our survey.</p>
+            <h3 class="text-center mt-2 mx-auto rounded">Books</h3>
+            <!-- <p class="text-center">---</p> -->
 
-            <hr>
+        </div>
 
-            <form action="/submit" method="post" class="mx-auto rounded">
-                <div class="row">
-                    <div class="col">
-                        <input type="text" class="form-control" name="name" placeholder="Name" required>
+        <div class="d-flex justify-content-center flex-wrap gap-sm-3 mt-3">
+            <div class="panel rounded p-3 flex-grow-1" style="height: min-content;">
+
+                <h5 class="text-center mt-1 mx-auto rounded">New Author</h5>
+
+                <hr class="">
+
+                <form action="/authors/new_author" method="post">
+                
+                    <input type="text" class="form-control mb-2" name="name" placeholder="Name" required>
+    
+                    <hr class="">
+    
+                    <div class="d-flex justify-content-end me-2">
+                        <button type="submit" class="btn-sm btn-primary" name="action" value="submit">Create</button> 
                     </div>
+                </form>
+
+            </div>
+
+            <div class="panel rounded p-3 flex-grow-1" style="height: min-content;">
+
+                <h5 class="text-center mt-1 mx-auto rounded">All Authors</h5>
+
+                <hr class="">
+
+                    <div class="p-1 overflow-auto bg-white border border-dark" style="max-height: 200px;">
+
+                        {% for author in authors %}
+                        <a href="/authors/{{ author.id }}" class="d-block text-dark text-decoration-none">{{ author.name }}</a>
+                        {% endfor %}
+                    </div>
+
+                <hr class="">
+
+                <div class="d-flex justify-content-end me-2">
+                        <a href="/books" class="btn-sm btn-primary text-decoration-none">Add Book</a>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <select class="form-select" name="dojo_location" required>
-                            <option value="" disabled selected>Select Dojo location</option>
-                            <option value="Seattle, Wa">Seattle, Wa</option>
-                            <option value="New York, Ny">New York, Ny</option>
-                            <option value="Austin, Tx">Austin, Tx</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <select class="form-select" name="fav_lang" required>
-                            <option value="" disabled selected>Select favorite language</option>
-                            <option value="Python">Python</option>
-                            <option value="C#">C#</option>
-                            <option value="Java">Java</option>
-                        </select>
-                    </div>
-                </div>              
-                <div class="row mt-2">
-                    <div class="col">
-                        <label for="comments" class="form-label">Comments</label>
-                        <textarea class="form-control" id="comments" name="comment" rows="3"></textarea>
-                    </div>
-                </div>
 
-                <hr>
-
-                <div class="row">
-                    <div class="col text-center">
-                        <button type="submit" class="btn btn-primary" name="action" value="submit">Submit</button> 
-                    </div>
-                </div>
-            </form>
-
+            </div>              
         </div>
 
     </div>

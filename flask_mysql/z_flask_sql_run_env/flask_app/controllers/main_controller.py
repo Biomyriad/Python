@@ -1,10 +1,7 @@
 from flask_app import app
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, url_for, session, flash
 
 from flask_app.models.email import Email
-
-css_vars = {
-}
 
 # # # # # # # # # # #
 #   Routes 
@@ -13,14 +10,41 @@ css_vars = {
 @app.route('/')
 def route_landing():
 
-    return render_template("index.html", css_vars=css_vars)
+    return redirect("/login") 
+
+@app.route('/login', methods=['POST', 'GET'])
+def route_login():
+
+    if request.method == 'GET':
+        return render_template("pages/login.html")
+    else:
+        pass
+        # data = {
+        #     'email': request.form['email'],
+        # }
+        # if Email.validate(request.form):
+        #     # Email.save(data)
+        #     return redirect("/success")
+
+    test = {
+        "hello": "yup",
+        "bye": 77
+    }
+
+    flash(test,"login2",)
+    flash("login","login")
+    flash("reg","register")
+        
+    return render_template("pages/login.html")
+    # return redirect(url_for('success',name = "xxxx"))
+    # return redirect("/success")
 
 @app.route('/success')
 def route_show_emails():
 
     emails = Email.get_all()
 
-    return render_template("success.html", emails=emails, css_vars=css_vars)  
+    return render_template("success.html", emails=emails)  
 
 @app.route('/delete_email/<int:email_id>')
 def route_delete_email(email_id):
@@ -33,19 +57,7 @@ def route_delete_email(email_id):
 #   Posts
 # # # # # # # # # # #
 
-@app.route('/submit_email', methods=['POST'])
-def route_submit_email():
 
-    data = {
-        'email': request.form['email'],
-    }
-
-    if not Email.validate(request.form):
-        return redirect('/')
-
-    Email.save(data)
-
-    return redirect(f"/success") 
 
 # # # # # # # # # # #
 #   !! Test Routes !!

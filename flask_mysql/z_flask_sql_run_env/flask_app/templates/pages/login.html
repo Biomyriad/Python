@@ -1,0 +1,82 @@
+{% extends 'layouts/single_column_layout.html' %}
+
+{% block title %}Email Validation - Login{% endblock %}
+
+{% block content %}
+
+            {% set my_var = "" %}
+
+            {% with messages = get_flashed_messages(category_filter=['register']) %}
+            {{ messages }}
+            <hr>
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+
+            <hr>
+            {{ messages[0]["bye"] }} 
+            
+                {% endif %}
+            {% endwith %}
+            
+            {{ my_var }}
+
+    
+    <div class="d-flex flex-column mt-3"> 
+        <!-- Login -->
+        <div class="panel rounded p-3 mx-auto flex-grow-1 login-register collapse show" style="height: min-content; min-width: 450px;">
+            <h4 class="text-center mt-1 mx-auto rounded">Login</h4>
+
+            <form action="/login" method="post" novalidate="novalidate">
+                <!-- inputs -->
+                <input type="text" class="form-control mb-2" name="email" placeholder="Email" required>
+                <input type="password" class="form-control mb-2" name="password" placeholder="Password" required>
+
+                <hr class="">
+
+                <!-- links -->
+                <div class="d-flex justify-content-between me-2">
+                    <div>
+                        <a class="text-decoration-none" href=".login-register" data-bs-toggle="collapse" role="button">Register</a>
+                        <a>|</a>
+                        <a class="text-decoration-none" 
+                            tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" 
+                            title="Notice" data-bs-content="This feature is not available at this time. Try again later.">
+                            Forgot Password
+                        </a>
+                    </div>
+                    
+                    <!-- submit -->
+                    <button type="submit" class="btn-sm btn-primary" name="action" value="submit">Login</button> 
+                </div>
+            </form>
+        </div>
+
+        <!-- Register -->
+        <div class="panel rounded p-3 mx-auto flex-grow-1 login-register collapse" style="height: min-content; min-width: 450px;">
+            <h4 class="text-center mt-1 mx-auto rounded">Register</h4>
+            <hr class="">
+
+            <form action="/submit_email" method="post" novalidate="novalidate">
+
+                <!-- inputs -->
+                <input type="text" class="form-control mb-2" name="first_name" placeholder="First Name"  required>
+                <input type="text" class="form-control mb-2" name="last_name" placeholder="Last Name" required>
+                <!-- could use type='email' for front end validation-->
+                <input type="text" class="form-control mb-2" name="email" placeholder="Email" required>
+                <input type="password" class="form-control mb-2" name="password" placeholder="Password" required>
+                <input type="password" class="form-control mb-2" name="confirm_password" placeholder="Confirm Password" required>
+
+                <hr class="">
+
+                <!-- submit -->
+                <div class="d-flex justify-content-end me-2">
+                    <button type="reset" class="btn-sm btn-primary me-2" data-bs-toggle="collapse" data-bs-target=".login-register">Cancel</button> 
+                    <button type="submit" class="btn-sm btn-primary" name="action" value="submit">Register</button> 
+                </div>
+            </form>
+
+        </div>
+    </div>
+{% endblock content %}

@@ -4,33 +4,39 @@
 
 {% block content %}
 
-            {% set my_var = "" %}
-
-            {% with messages = get_flashed_messages(category_filter=['register']) %}
-            {{ messages }}
-            <hr>
-                {% if messages %}
-                    {% for message in messages %}
-                        <p>{{message}}</p>
-                    {% endfor %}
-
-            <hr>
-            {{ messages[0]["bye"] }} 
-            
-                {% endif %}
-            {% endwith %}
-            
-            {{ my_var }}
-
+    <!-- get flash messages by category -->
+    {% if get_flashed_messages(category_filter=['login']) %}
+        {% set login_messages = get_flashed_messages(category_filter=['login']) %}
+    {% endif %}
+    {% if get_flashed_messages(category_filter=['register']) %}
+        {% set register_messages = get_flashed_messages(category_filter=['register']) %}
+    {% endif %}
     
+    <!-- Show registration on page load -->
+    <!-- set session "show_registration" = True -->
+    <!-- will remove after page loads -->
+    {% if 'show_registration' in session and session['show_registration'] == True %}
+        {% set show_login = "" %}
+        {% set show_registration = "show" %}
+        {% set x = session.pop('show_registration') %}
+    {% else %}
+        {% set show_login = "show" %}
+        {% set show_registration = "" %}
+    {% endif %}
+
+    {% if 'show_registration' in session %}
+        <p>SESSION</p>
+    {% endif %}
     <div class="d-flex flex-column mt-3"> 
         <!-- Login -->
-        <div class="panel rounded p-3 mx-auto flex-grow-1 login-register collapse show" style="height: min-content; min-width: 450px;">
+        <div class="panel rounded p-3 mx-auto flex-grow-1 login-register collapse {{ show_login }}" style="height: min-content; min-width: 450px;">
             <h4 class="text-center mt-1 mx-auto rounded">Login</h4>
 
             <form action="/login" method="post" novalidate="novalidate">
                 <!-- inputs -->
+                <p class="validation" {{ login_messages | get_validation_visibility("email")}}>{{ login_messages | get_validation_message("email") }}</p>
                 <input type="text" class="form-control mb-2" name="email" placeholder="Email" required>
+                <p class="validation" {{ login_messages | get_validation_visibility("password")}}>{{ login_messages | get_validation_message("password") }}</p>
                 <input type="password" class="form-control mb-2" name="password" placeholder="Password" required>
 
                 <hr class="">
@@ -48,24 +54,29 @@
                     </div>
                     
                     <!-- submit -->
-                    <button type="submit" class="btn-sm btn-primary" name="action" value="submit">Login</button> 
+                    <button type="submit" class="btn-sm btn-primary" name="action" value="login">Login</button> 
                 </div>
             </form>
         </div>
 
         <!-- Register -->
-        <div class="panel rounded p-3 mx-auto flex-grow-1 login-register collapse" style="height: min-content; min-width: 450px;">
+        <div class="panel rounded p-3 mx-auto flex-grow-1 login-register collapse {{ show_registration }}" style="height: min-content; min-width: 450px;">
             <h4 class="text-center mt-1 mx-auto rounded">Register</h4>
             <hr class="">
 
-            <form action="/submit_email" method="post" novalidate="novalidate">
+            <form action="/login" method="post" novalidate="novalidate">
 
                 <!-- inputs -->
+                <p class="validation" {{ register_messages | get_validation_visibility("first_name")}}>{{ register_messages | get_validation_message("first_name") }}</p>
                 <input type="text" class="form-control mb-2" name="first_name" placeholder="First Name"  required>
+                <p class="validation" {{ register_messages | get_validation_visibility("last_name")}}>{{ register_messages | get_validation_message("last_name") }}</p>
                 <input type="text" class="form-control mb-2" name="last_name" placeholder="Last Name" required>
                 <!-- could use type='email' for front end validation-->
+                <p class="validation" {{ register_messages | get_validation_visibility("email")}}>{{ register_messages | get_validation_message("email") }}</p>
                 <input type="text" class="form-control mb-2" name="email" placeholder="Email" required>
+                <p class="validation" {{ register_messages | get_validation_visibility("password")}}>{{ register_messages | get_validation_message("password") }}</p>
                 <input type="password" class="form-control mb-2" name="password" placeholder="Password" required>
+                <p class="validation" {{ register_messages | get_validation_visibility("confirm_password")}}>{{ register_messages | get_validation_message("confirm_password") }}</p>
                 <input type="password" class="form-control mb-2" name="confirm_password" placeholder="Confirm Password" required>
 
                 <hr class="">
@@ -73,7 +84,7 @@
                 <!-- submit -->
                 <div class="d-flex justify-content-end me-2">
                     <button type="reset" class="btn-sm btn-primary me-2" data-bs-toggle="collapse" data-bs-target=".login-register">Cancel</button> 
-                    <button type="submit" class="btn-sm btn-primary" name="action" value="submit">Register</button> 
+                    <button type="submit" class="btn-sm btn-primary" name="action" value="register">Register</button> 
                 </div>
             </form>
 

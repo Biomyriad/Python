@@ -1,7 +1,9 @@
 from flask_app import app
+from flask_bcrypt import Bcrypt  
+bcrypt = Bcrypt(app) 
 from flask import render_template, request, redirect, url_for, session, flash
 
-from flask_app.models.email import Email
+from flask_app.models.user import User
 
 # # # # # # # # # # #
 #   Routes 
@@ -18,33 +20,61 @@ def route_login():
     if request.method == 'GET':
         return render_template("pages/login.html")
     else:
-        pass
-        # data = {
-        #     'email': request.form['email'],
-        # }
-        # if Email.validate(request.form):
-        #     # Email.save(data)
-        #     return redirect("/success")
+        # LOGIN
+        if request.form['action'] == 'login':
+            # missing info
+            missing_login_info = False
+            if request.form['email'] == None or request.form['email'] == "":
+                flash({"label": "email", "message": "Please enter an email.", "visibility": ""},"login")
+            if request.form['password'] == None or request.form['password'] == "":
+                flash({"label": "password", "message": "Please enter your password.", "visibility": ""},"login")
+            if missing_login_info:
+                return redirect('/login')
+            
+            # invalid info
+            user = User.get_by_email(request.form['email'])
+            if not user:
+                flash({"label": "email", "message": f"No account found for {request.form['email']}", "visibility": ""},"login")
+                return redirect("/login") 
+            if not bcrypt.check_password_hash(user.password_hash, request.form['password']):
+                flash({"label": "password", "message": "Invalid Password, please try again.", "visibility": ""},"login")
+                return redirect('/login')
+            
+            return redirect("/dashboard") 
+        # REGISTER
+        else: 
 
-    test = {
-        "hello": "yup",
-        "bye": 77
-    }
+            data = request.form.to_dict()
 
-    flash(test,"login2",)
-    flash("login","login")
-    flash("reg","register")
-        
+            is_valid = User.validate_registration(request.form)
+
+            if data['password'] == "" or data['confirm_password'] == "":
+                flash({"label": "password", "message": "Must enter a password.", "visibility": ""},"register")
+                is_valid = False
+
+            # extra password validations here
+
+            if not data['password'] == data['confirm_password']:
+                flash({"label": "confirm_password", "message": "Passwords do not match.", "visibility": ""},"register")
+                is_valid = False
+
+            if not is_valid:
+                session['show_registration'] = True
+                return redirect('/login')
+
+            data["password_hash"] = bcrypt.generate_password_hash(data['password'])
+            del data["password"]
+            del data["confirm_password"]
+
+            User.save(data)
+            return redirect("/dashboard") 
+
     return render_template("pages/login.html")
-    # return redirect(url_for('success',name = "xxxx"))
-    # return redirect("/success")
 
-@app.route('/success')
-def route_show_emails():
+@app.route('/dashboard')
+def route_dashboard():
 
-    emails = Email.get_all()
-
-    return render_template("success.html", emails=emails)  
+    return render_template("pages/dashboard.html")  
 
 @app.route('/delete_email/<int:email_id>')
 def route_delete_email(email_id):

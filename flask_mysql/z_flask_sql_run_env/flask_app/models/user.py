@@ -4,7 +4,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
-class Email:
+class User:
     def __init__(self, data):
         self.id = data['id']
         self.first_name = data['first_name']
@@ -79,15 +79,18 @@ class Email:
         return connectToMySQL('login_and_register').query_db( query, data )
 
     @staticmethod
-    def validate(data):
+    def validate_registration(data):
         is_valid = True
+        if len(data['first_name']) < 2 or data['first_name'] == "":
+            flash({"label": "first_name", "message": "First name bust be greater than 2 letters.", "visibility": ""},"register")
+            is_valid = False
+        if len(data['last_name']) < 2 or data['last_name'] == "":
+            flash({"label": "last_name", "message": "First name bust be greater than 2 letters.", "visibility": ""},"register")
+            is_valid = False
         if not EMAIL_REGEX.match(data['email']): 
-            flash("Invalid email address!")
+            flash({"label": "email", "message": "Invalid email address.", "visibility": ""},"register")
             is_valid = False
-        if not Email.get_by_email(data['email']) == False:
-            flash('Email has already been submitted!')
+        elif not User.get_by_email(data['email']) == False:
+            flash({"label": "email", "message": "Email address has already been registered.", "visibility": ""},"register")
             is_valid = False
-
-        if is_valid:
-            flash(f'The email address you entered ({data["email"]}) is a VALID email address! Thank you!')
         return is_valid

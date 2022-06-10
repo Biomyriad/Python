@@ -9,11 +9,7 @@ body {
     background-color: #cccccc;
 }
 
-.panel {
-    background-color: #e9e9e9;
-    box-shadow: 0px 10px 13px -7px rgba(0, 0, 0, 0.12);
-    max-width: 600px;
-}
+/* nav styling */
 
 nav {
     background-color: #e9e9e9;
@@ -50,11 +46,29 @@ nav {
     transform: scaleX(1);
 }
 
+/* page components */
+
+.panel {
+    background-color: #e9e9e9;
+    box-shadow: 0px 10px 13px -7px rgba(0, 0, 0, 0.12);
+    max-width: 600px;
+}
+
+/* tables */
 .first-col-bold tr td:first-child {
     font-weight: bold;
 }
 
+/* button and link customizing */
 .link-button {
     color: #0d6efd;
     background-color: transparent;
+}
+
+/* validation messages */ 
+
+.validation {
+    color: red;
+    margin: 0px;
+    padding-left: 5px;
 }

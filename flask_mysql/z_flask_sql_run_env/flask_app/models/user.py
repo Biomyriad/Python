@@ -82,7 +82,7 @@ class User:
     def validate_registration(data):
         is_valid = True
         if len(data['first_name']) < 2 or data['first_name'] == "":
-            flash({"label": "first_name", "message": "First name bust be greater than 2 letters.", "visibility": ""},"register")
+            flash({"label": "first_name", "message": "First name must be greater than 2 letters.", "visibility": ""},"register")
             is_valid = False
         if len(data['last_name']) < 2 or data['last_name'] == "":
             flash({"label": "last_name", "message": "First name bust be greater than 2 letters.", "visibility": ""},"register")

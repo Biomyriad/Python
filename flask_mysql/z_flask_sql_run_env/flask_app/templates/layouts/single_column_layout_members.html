@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {% include 'partials/css_js_lib_file_includes/std_head_css_js_includes.html' %}
+
+        <link rel="icon" href="{{ url_for('static', filename='images/site_logo.svg') }}">
+        <title>{% block title %}{% endblock %}</title>
+    {% endblock head %}
+</head>
+
+<body>
+
+    {% include 'partials/navigation.html' %}
+
+    <div class="container-fluid page-container" style="max-width: 1200px;">
+        {% if 'logged_in' in session %}
+        
+            {% block content %}
+            {% endblock content %}
+        
+        {% else %}
+            
+            <div class="panel mx-auto rounded mt-3 p-1" style="max-width: none;">
+                <h3 class="text-center mt-2 mx-auto">Oops... You are not logged!</h3>
+                <h5 class="text-center mt-2 mx-auto">You must <a href="/login" class="text-decoration-none">login</a> to view this page.</h5>
+            </div> 
+
+        {% endif %}
+
+    </div>
+    
+    {% include 'partials/css_js_lib_file_includes/std_end_of_body_js_includes.html' %}
+</body>
+</html>
+

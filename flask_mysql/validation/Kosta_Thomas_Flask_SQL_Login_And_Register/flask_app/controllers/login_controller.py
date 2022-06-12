@@ -84,12 +84,12 @@ def route_login():
 
             data["password_hash"] = bcrypt.generate_password_hash(request.form['password'])
 
-            User.save(data)
+            user_id = User.save(data)
 
             session['logged_in'] = {
-                "id": user.id,
-                "first_name": user.first_name,
-                "email": user.email
+                "id": user_id,
+                "first_name": data['first_name'],
+                "email": data['email']
             }
             return redirect(valid_login_url) 
 # End of ROUTE_LOGIN  

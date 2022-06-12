@@ -17,19 +17,20 @@ class User:
     @classmethod
     def get_all(cls):
         query = f"""
-            SELECT * 
+            SELECT id, first_name, last_name, email, created_at, updated_at
             FROM users;
         """
         results = cls.run_query(query)
         items = []
         for row in results:
+            row["password_hash"] = ''
             items.append( cls(row) )
         return items    
 
     @classmethod
     def get_by_id(cls, id):
         query = f"""
-            SELECT * 
+            SELECT id, first_name, last_name, email, created_at, updated_at 
             FROM users 
             WHERE id=%(id)s;
         """
@@ -45,6 +46,23 @@ class User:
 
     @classmethod
     def get_by_email(cls, email):
+        query = f"""
+            SELECT id, first_name, last_name, email, created_at, updated_at 
+            FROM users 
+            WHERE email=%(email)s;
+        """
+        data = { "email": email }
+        results = cls.run_query(query, data)
+
+        try:
+            item = cls(results[0])
+        except Exception as e:
+            return False
+
+        return item
+
+    @classmethod
+    def get_by_email_with_hash(cls, email):
         query = f"""
             SELECT * 
             FROM users 
@@ -76,7 +94,7 @@ class User:
 
     @classmethod
     def run_query(cls, query, data=None):
-        return connectToMySQL('login_and_register').query_db( query, data )
+        return connectToMySQL('private_wall').query_db( query, data )
 
     @staticmethod
     def validate_registration(data):

@@ -13,6 +13,18 @@ class Message:
         self.updated_at = data['updated_at']
 
     @classmethod
+    def get_number_sent_for_id(cls, id ):
+        query = """
+            select count(id) as sent 
+            from messages
+            WHERE sender=%(id)s;
+        """
+        data = { "id": id }
+        
+        results = cls.run_query( query, data )
+        return results[0]['sent']
+
+    @classmethod
     def get_by_id(cls, id):
         query = f"""
             select messages.*, users.first_name as recipient_name, sent_by.first_name as sender_name
@@ -66,3 +78,10 @@ class Message:
     @classmethod
     def run_query(cls, query, data=None):
         return connectToMySQL('private_wall').query_db( query, data )
+
+    @staticmethod
+    def validate_message(data):
+        if len(data['message']) < 5:
+            flash({"label": f"message{data['recipient']}", "message": "Message must be greater then 5 letters."},"message_error")
+            return False
+        return True

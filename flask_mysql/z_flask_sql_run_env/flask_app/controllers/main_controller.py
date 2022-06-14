@@ -18,8 +18,10 @@ def route_dashboard():
 
     messages = Message.get_messages_by_recipient_id(session['logged_in']['id'])
     users = User.get_all()
+    users.sort(key=lambda x: x.first_name)
+    messages_sent = Message.get_number_sent_for_id(session['logged_in']['id'])
 
-    return render_template("pages/dashboard.html", messages=messages, users=users)  
+    return render_template("pages/dashboard.html", messages=messages, users=users, messages_sent=messages_sent)  
 
 # # # # # # # # # # #
 #   Posts
@@ -34,7 +36,8 @@ def route_send_message():
         "message": request.form['message']
     }
 
-    Message.save(data)
+    if Message.validate_message(data):
+        Message.save(data)
 
     return redirect("/dashboard")
 
@@ -42,17 +45,13 @@ def route_send_message():
 def route_delete_message(message_id):
 
     message = Message.get_by_id(message_id)
-    print(f"RECIVED MESSAGE DATA FOR {message_id} - {message}")
 
-    if not message:
-        print(f"IF NOT MESSAGE - {message}")        
+    if not message:        
         return redirect("/dashboard") 
 
     if message.recipient != session['logged_in']['id']:
-        print(f"ID != MESSAGE - {message}")
         return redirect("/WERNING") 
-    
-    print(f"DELETE - {message}")
+
     message.delete_by_id(message_id)
 
     return redirect("/dashboard") 

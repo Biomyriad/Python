@@ -1,7 +1,16 @@
+@staticmethod
+def validate_message(data):
+    if len(data['message']) < 5:
+        flash({"label": "email", f"message{data['recipient']}": "Message must be greater then 5 letters.", "visibility": ""},"message_error")
+        return False
+    return True
+
+
 <!-- TODO -->
 
-* change the query for getting user with password.
-    - maybe put in custom validation sql
+* check for left overs of flash visibility
+* add delete not my message error
+* format all SQL to caps
 
  * fix responsive layout
         - nav

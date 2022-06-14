@@ -19,7 +19,6 @@ def element_by_index(value, index):
 
 @app.template_filter('get_validation_message')
 def get_validation_message(messages, msg_label, default_return=""):
-    """Return an element at index"""
     if messages is None or messages == "":
         return default_return
     if msg_label is None or msg_label == "":
@@ -27,14 +26,12 @@ def get_validation_message(messages, msg_label, default_return=""):
 
     for msg in messages:
         if "label" in msg and msg['label'] == msg_label:
-            print(f"-------------- {msg}")
             return msg['message']
 
     return default_return
 
 @app.template_filter('get_validation_visibility')
 def get_validation_visibility(messages, msg_label):
-    """Return an element at index"""
     if messages is None or messages == "":
         return ""
     if msg_label is None or msg_label == "":
@@ -42,10 +39,12 @@ def get_validation_visibility(messages, msg_label):
 
     for msg in messages:
         if "label" in msg and msg['label'] == msg_label:
-            print(f"-------------- {msg}")
-            return msg['visibility']
+            return ""
 
-    return ""    
+    return "hidden"
+
+
+    
 
 def ini_template_filters(app):
     app.jinja_env.filters['formatdatetime'] = format_datetime

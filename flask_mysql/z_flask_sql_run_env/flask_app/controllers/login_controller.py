@@ -7,7 +7,6 @@ from flask_app.models.user import User
 
 # set on valid login/register URL string
 valid_login_url = "/dashboard"
-valid_login_template_path = "pages/dashboard.html"
 
 # # # # # # # # # # #
 #   Routes 
@@ -25,7 +24,7 @@ def route_login():
 
     if request.method == 'GET':
         if "logged_in" in session:
-            return render_template(valid_login_template_path)
+            return redirect(valid_login_url) 
         return render_template("pages/login.html")
     else:
         # LOGIN
@@ -33,19 +32,19 @@ def route_login():
             # missing info
             missing_login_info = False
             if request.form['email'] == None or request.form['email'] == "":
-                flash({"label": "email", "message": "Please enter an email.", "visibility": ""},"login")
+                flash({"label": "email", "message": "Please enter an email."},"login")
             if request.form['password'] == None or request.form['password'] == "":
-                flash({"label": "password", "message": "Please enter your password.", "visibility": ""},"login")
+                flash({"label": "password", "message": "Please enter your password."},"login")
             if missing_login_info:
                 return redirect('/login')
             
             # invalid info
             user = User.get_by_email_with_hash(request.form['email'])
             if not user:
-                flash({"label": "email", "message": f"No account found for {request.form['email']}", "visibility": ""},"login")
+                flash({"label": "email", "message": f"No account found for {request.form['email']}"},"login")
                 return redirect("/login") 
             if not bcrypt.check_password_hash(user.password_hash, request.form['password']):
-                flash({"label": "password", "message": "Invalid Password, please try again.", "visibility": ""},"login")
+                flash({"label": "password", "message": "Invalid Password, please try again."},"login")
                 return redirect('/login')
             
             session['logged_in'] = {
@@ -66,13 +65,13 @@ def route_login():
             is_valid = User.validate_registration(request.form)
 
             if request.form['password'] == "" or request.form['confirm_password'] == "":
-                flash({"label": "password", "message": "Must enter a password.", "visibility": ""},"register")
+                flash({"label": "password", "message": "Must enter a password."},"register")
                 is_valid = False
 
             # extra password validations here
 
             if not request.form['password'] == request.form['confirm_password']:
-                flash({"label": "confirm_password", "message": "Passwords do not match.", "visibility": ""},"register")
+                flash({"label": "confirm_password", "message": "Passwords do not match."},"register")
                 is_valid = False
 
             if not is_valid:

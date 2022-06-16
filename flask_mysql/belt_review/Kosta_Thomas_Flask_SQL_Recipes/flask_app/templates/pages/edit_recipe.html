@@ -1,0 +1,70 @@
+{% extends 'layouts/single_column_layout_members.html' %}
+
+{% block title %}Recipe - Edit{% endblock %}
+
+{% block content %}
+
+    {% if get_flashed_messages(category_filter=['recipe']) %}
+        {% set messages = get_flashed_messages(category_filter=['recipe']) %}
+    {% endif %}
+
+    <div class="panel rounded p-3 mt-3 mx-auto flex-grow-1" style="height: min-content; min-width: 450px;">
+        <h4 class="text-center mt-1 mx-auto rounded">Edit Recipe</h4>
+        
+        <hr class="">
+
+        <form action="/update_recipe" method="post" novalidate="novalidate">
+
+            <div class="d-flex justify-content-between">
+
+                <div class="w-50" style="margin-left: 80px;">
+                    <p class="validation" {{ messages | get_validation_visibility("name")}}>{{ messages | get_validation_message("name") }}</p>
+                    <input type="text" class="form-control mb-2" name="name" value="{{recipe.name}}" placeholder="Recipe Name">
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="validation" {{ messages | get_validation_visibility("description")}}>{{ messages | get_validation_message("description") }}</p>
+                            <textarea class="form-control mb-2" name="description" rows="3" placeholder="Recipe Description">{{ recipe.description }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="validation" {{ messages | get_validation_visibility("instructions")}}>{{ messages | get_validation_message("instructions") }}</p>
+                            <textarea class="form-control mb-2" name="instructions" rows="3" placeholder="Recipe Instructions">{{recipe.instructions}}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-25" style="margin-right: 80px;">
+                    <p class="validation ps-0 ms-0" {{ messages | get_validation_visibility("date_made")}}>{{ messages | get_validation_message("date_made") }}</p>
+                    <label class="form-label mb-0 fw-bold" for="date_made">Date Made On:</label>
+                    <input class="form-control mb-2" type="date" id="date_made" name="date_made" value="{{recipe.date_made}}">
+
+                    <div>
+                        <p class="m-0 fw-bold">Under 30 Minutes?</p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="True" id="under30-yes" name="is_under_30min" {{'checked' if recipe.is_under_30min == 1 }}>
+                            <label class="form-check-label" for="under30-yes">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="False" id="under30-no" name="is_under_30min" {{'checked' if recipe.is_under_30min == 0 }}>
+                            <label class="form-check-label" for="under30-no">No</label>
+                        </div>                 
+                    </div> 
+
+                </div>
+
+            </div>
+
+            <hr class="">
+
+            <div class="d-flex justify-content-end mx-2">
+                <button type="submit" class="btn-sm btn-primary" name="action" value="submit">Update</button> 
+            </div>
+
+        </form>
+
+    </div>
+
+{% endblock content %}

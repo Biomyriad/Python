@@ -97,7 +97,7 @@ class User:
 
     @classmethod
     def run_query(cls, query, data=None):
-        return connectToMySQL('private_wall').query_db( query, data )
+        return connectToMySQL('recipes').query_db( query, data )
 
     @staticmethod
     def validate_registration(data):

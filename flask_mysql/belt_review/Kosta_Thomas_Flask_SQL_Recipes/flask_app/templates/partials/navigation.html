@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-sm navbar-light stroke">
+
+    <div class="container-fluid"  style="max-width: 1200px;">
+
+        
+        <a class="navbar-brand py-0" href="/" style="vertical-align: baseline;">
+            <img src="{{ url_for('static', filename='images/site_logo.svg') }}" alt="Logo" style="height: 50px;"><span class="nav-logo-text">Recipe Finder</span>
+        </a>
+
+        <h3 class="text-center mt-2 mx-auto rounded"></h3>
+
+        <div class="d-flex align-items-center">
+            <div class="link-wrapper">
+                
+            {% if 'logged_in' in session %}
+                <a class="nav-link nav-link-hover text-dark fw-bold" href="/dashboard">Home</a>
+            {% else %}
+                <a class="nav-link nav-link-hover text-dark fw-bold" href="/">Home</a>
+            {% endif %}
+            </div>
+            <a class="nav-link text-dark  px-0 fs-5">|</a>
+            <div class="link-wrapper">
+                {% if 'logged_in' in session %}
+                    <a class="nav-link nav-link-hover text-dark fw-bold" href="/logout">Logout: {{session['logged_in']['first_name']}}</a>
+                {% else %}
+                    <a class="nav-link nav-link-hover text-dark fw-bold" href="/login">Login</a>
+                {% endif %}
+            </div>
+            
+        </div>
+
+    </div>
+    
+</nav>

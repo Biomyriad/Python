@@ -40,7 +40,7 @@ class User:
         data = { "id": id }
         results = cls.run_query(query, data)
 
-        if len(results) > 1:
+        if len(results) > 0:
             item = cls(results[0])
         else:
             return False
@@ -57,7 +57,7 @@ class User:
         data = { "email": email }
         results = cls.run_query(query, data)
 
-        if len(results) > 1:
+        if len(results) > 0:
             item = cls(results[0])
         else:
             return False
@@ -74,7 +74,7 @@ class User:
         data = { "email": email }
         results = cls.run_query(query, data)
 
-        if len(results) > 1:
+        if len(results) > 0:
             item = cls(results[0])
         else:
             return False

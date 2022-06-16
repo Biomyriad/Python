@@ -40,9 +40,9 @@ class User:
         data = { "id": id }
         results = cls.run_query(query, data)
 
-        try:
+        if len(results) > 1:
             item = cls(results[0])
-        except Exception as e:
+        else:
             return False
 
         return item
@@ -57,9 +57,9 @@ class User:
         data = { "email": email }
         results = cls.run_query(query, data)
 
-        try:
+        if len(results) > 1:
             item = cls(results[0])
-        except Exception as e:
+        else:
             return False
 
         return item
@@ -74,9 +74,9 @@ class User:
         data = { "email": email }
         results = cls.run_query(query, data)
 
-        try:
+        if len(results) > 1:
             item = cls(results[0])
-        except Exception as e:
+        else:
             return False
 
         return item

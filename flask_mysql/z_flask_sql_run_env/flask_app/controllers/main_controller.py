@@ -21,6 +21,11 @@ def route_dashboard():
 #   Posts
 # # # # # # # # # # #
 
+@app.route('/submit', methods=['POST'])
+def route_submit():
+
+    return redirect("/dashboard")   
+
 
 # # # # # # # # # # #
 #   !! Test Routes !!
